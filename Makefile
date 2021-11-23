@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = main.c
+SRC = main.c	ft_init.c	ft_death_dinner.c
 
 OBJ = $(patsubst %.c,%.o,$(SRC))
 
@@ -8,7 +8,7 @@ HEADER = philo.h
 
 LIBMINI_DIR = libmini
 
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
@@ -17,7 +17,7 @@ $(NAME): $(OBJ) $(HEADER) $(LIBMINI_DIR)
 		gcc $(OBJ) -L$(LIBMINI_DIR) -lmini -o $(NAME)
 
 %.o: %.c
-		gcc $(FLAGC) -c $<
+		gcc $(CFLAGS) -c $<
 
 clean:
 		make clean -C $(LIBMINI_DIR)

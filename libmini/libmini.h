@@ -13,7 +13,6 @@
 #ifndef LIBMINI_H
 # define LIBMINI_H
 # include <unistd.h>
-# include <pthread.h>
 
 void	ft_putendl(char *str);
 void	ft_error(char *str);

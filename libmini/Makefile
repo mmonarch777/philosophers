@@ -6,7 +6,7 @@ OBJ = $(patsubst %.c,%.o,$(SRC))
 
 HEADER = libmini.h
 
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
@@ -14,7 +14,7 @@ $(NAME): $(OBJ) $(HEADER)
 		ar rcs $(NAME) $?
 
 %.o: %.c
-		gcc $(FLAGS) -c $<
+		gcc $(CFLAGS) -c $<
 
 clean:
 		rm -f $(OBJ)
