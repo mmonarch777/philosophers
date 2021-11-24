@@ -17,7 +17,8 @@ int	ft_init_philo(t_date *date)
 		if (i == date->nb - 1)
 			date->phil[i].left_fork = 0;
 		else
-			date->phil[i].right_fork = i + 1;
+			date->phil[i].left_fork = i + 1;
+//		printf("id %d, right %d, left%d\n", date->phil[i].id, date->phil[i].right_fork, date->phil[i].left_fork);
 		i++;
 	}
 	return (0);

@@ -20,10 +20,13 @@ void	ft_eat_first(t_philo *philo, t_date *date)
 {
 	pthread_mutex_lock(&(date->fork[philo->right_fork]));
 	pthread_mutex_lock(&date->write);
-	(void)date;
-	printf("   %d\n", philo->id);
+	printf("%6d %d has taken a r_fork\n", get_time(date->start), philo->id);
+	pthread_mutex_lock(&(date->fork[philo->left_fork]));
+	printf("%-6d %d has taken a l_fork\n", get_time(date->start), philo->id);
+	pthread_mutex_unlock(&date->write);
 	philo->count_eat++;
-	printf("counter first %d\n", philo->count_eat);
+	pthread_mutex_unlock(&(date->fork[philo->right_fork]));
+	pthread_mutex_unlock(&(date->fork[philo->left_fork]));
 	usleep(5000);
 }
 
