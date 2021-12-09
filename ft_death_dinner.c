@@ -1,41 +1,49 @@
 #include "philo.h"
-#include <stdio.h>
-
-int	get_time(struct timeval time)
-{
-	struct timeval now;
-
-	gettimeofday(&now, NULL);
-	now.tv_sec -= time.tv_sec;
-	now.tv_usec -= time.tv_usec;
-	if (now.tv_usec < 0)
-	{
-		now.tv_sec--;
-		now.tv_usec += 1000000;
-	}
-	return (int)(now.tv_sec * 1000 + now.tv_usec / 1000);
-}
 
 void	ft_eat_first(t_philo *philo, t_date *date)
 {
 	pthread_mutex_lock(&(date->fork[philo->right_fork]));
 	pthread_mutex_lock(&date->write);
-	printf("%6d %d has taken a r_fork\n", get_time(date->start), philo->id);
-	pthread_mutex_lock(&(date->fork[philo->left_fork]));
-	printf("%-6d %d has taken a l_fork\n", get_time(date->start), philo->id);
+	printf("%d %d has taken a r_fork\n", get_time(date->start), philo->id);
 	pthread_mutex_unlock(&date->write);
-	philo->count_eat++;
+	pthread_mutex_lock(&(date->fork[philo->left_fork]));
+	pthread_mutex_lock(&date->write);
+	printf("%d %d has taken a l_fork\n", get_time(date->start), philo->id);
+	pthread_mutex_unlock(&date->write);
+	pthread_mutex_lock(&date->write);
+	printf("%d %d is eating\n", get_time(date->start), philo->id);
+	pthread_mutex_unlock(&date->write);
+	if (get_time(philo->eat) > date->time_die)
+		philo->death = 1;
+	gettimeofday(&philo->eat, NULL);
+	if (date->number_eat != -1)
+		philo->count_eat++;
+	time_eat_sleep_think(date->time_eat);
 	pthread_mutex_unlock(&(date->fork[philo->right_fork]));
 	pthread_mutex_unlock(&(date->fork[philo->left_fork]));
-	usleep(5000);
 }
 
-void	ft_eat_second(t_philo *philo)
+void	ft_eat_second(t_philo *philo, t_date *date)
 {
-	printf("%d\n", philo->id);
-	philo->count_eat++;
-	printf("counter %d\n", philo->count_eat);
-	usleep(5000);
+	pthread_mutex_lock(&(date->fork[philo->left_fork]));
+	pthread_mutex_lock(&date->write);
+	printf("%d %d has taken a r_fork\n", get_time(date->start), philo->id);
+	pthread_mutex_unlock(&date->write);
+	pthread_mutex_lock(&(date->fork[philo->right_fork]));
+	pthread_mutex_lock(&date->write);
+	printf("%d %d has taken a l_fork\n", get_time(date->start), philo->id);
+	pthread_mutex_unlock(&date->write);
+	pthread_mutex_lock(&date->write);
+	printf("%d %d is eating\n", get_time(date->start), philo->id);
+	pthread_mutex_unlock(&date->write);
+	if (get_time(philo->eat) > date->time_die)
+		philo->death = 1;
+	gettimeofday(&philo->eat, NULL);
+	if (date->number_eat != -1)
+		philo->count_eat++;
+	time_eat_sleep_think(date->time_eat);
+	pthread_mutex_unlock(&(date->fork[philo->right_fork]));
+	pthread_mutex_unlock(&(date->fork[philo->left_fork]));
 }
 
 void	*ft_death_dinner(void *philo_date)
@@ -45,20 +53,20 @@ void	*ft_death_dinner(void *philo_date)
 
 	philo = (t_philo *)philo_date;
 	date = philo->date;
-	if (philo->id % 2)
-		sleep (1);
 	while (1)
 	{
 		if (!(philo->id % 2))
 			ft_eat_first(philo, date);
 		else
-			ft_eat_second(philo);
+			ft_eat_second(philo, date);
 		if (date->number_eat == philo->count_eat)
 		{
-			printf("finish\n");
+			printf("%d %d is FINISH\n", get_time(date->start), philo->id);
 			break;
 		}
-		printf("%d time %d\n", philo->id, get_time(date->start));
+		sleeping(philo, date);
+		thinking(philo, date);
+
 	}
 	return (0);
 }

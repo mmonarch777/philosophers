@@ -10,6 +10,7 @@ int	ft_init_philo(t_date *date)
 		if (pthread_mutex_init(&date->fork[i], NULL))
 			return (1);
 		gettimeofday(&date->phil[i].eat, NULL);
+		date->phil[i].death = 0;
 		date->phil[i].id = i;
 		date->phil[i].right_fork = i;
 		date->phil[i].count_eat = 0;
@@ -18,7 +19,6 @@ int	ft_init_philo(t_date *date)
 			date->phil[i].left_fork = 0;
 		else
 			date->phil[i].left_fork = i + 1;
-//		printf("id %d, right %d, left%d\n", date->phil[i].id, date->phil[i].right_fork, date->phil[i].left_fork);
 		i++;
 	}
 	return (0);
@@ -31,9 +31,13 @@ int	ft_init(char **argv, t_date *date)
 	date->time_die = ft_atoi(argv[2]);
 	date->time_eat = ft_atoi(argv[3]);
 	date->time_sleep = ft_atoi(argv[4]);
-	date->number_eat = 0;
+	date->number_eat = -1;
 	if (argv[5])
+	{
 		date->number_eat = ft_atoi(argv[5]);
+		if (date->number_eat == 0)
+			exit(0);
+	}
 	date->phil = malloc(sizeof (t_philo) * date->nb);
 	date->fork = malloc(sizeof (pthread_mutex_t) * date->nb);
 	if (pthread_mutex_init(&date->write, NULL))
