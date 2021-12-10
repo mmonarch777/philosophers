@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/10 18:44:58 by mmonarch          #+#    #+#             */
+/*   Updated: 2021/12/10 18:45:05 by mmonarch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_init_philo(t_date *date)
@@ -10,8 +22,7 @@ int	ft_init_philo(t_date *date)
 		if (pthread_mutex_init(&date->fork[i], NULL))
 			return (1);
 		gettimeofday(&date->phil[i].eat, NULL);
-		date->phil[i].death = 0;
-		date->phil[i].id = i;
+		date->phil[i].id = i + 1;
 		date->phil[i].right_fork = i;
 		date->phil[i].count_eat = 0;
 		date->phil[i].date = date;
@@ -31,11 +42,11 @@ int	ft_init(char **argv, t_date *date)
 	date->time_die = ft_atoi(argv[2]);
 	date->time_eat = ft_atoi(argv[3]);
 	date->time_sleep = ft_atoi(argv[4]);
-	date->number_eat = -1;
+	date->nb_eat = -1;
 	if (argv[5])
 	{
-		date->number_eat = ft_atoi(argv[5]);
-		if (date->number_eat == 0)
+		date->nb_eat = ft_atoi(argv[5]);
+		if (date->nb_eat == 0)
 			exit(0);
 	}
 	date->phil = malloc(sizeof (t_philo) * date->nb);

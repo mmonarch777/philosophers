@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/10 18:45:29 by mmonarch          #+#    #+#             */
+/*   Updated: 2021/12/10 18:45:32 by mmonarch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	get_time(struct timeval time)
 {
-	struct timeval now;
+	struct timeval	now;
 
 	gettimeofday(&now, NULL);
 	now.tv_sec -= time.tv_sec;
@@ -12,7 +24,7 @@ int	get_time(struct timeval time)
 		now.tv_sec--;
 		now.tv_usec += 1000000;
 	}
-	return (int)(now.tv_sec * 1000 + now.tv_usec / 1000);
+	return ((int)(now.tv_sec * 1000 + now.tv_usec / 1000));
 }
 
 void	time_eat_sleep_think(int time)
@@ -21,7 +33,7 @@ void	time_eat_sleep_think(int time)
 
 	gettimeofday(&now, NULL);
 	while (get_time(now) < time)
-		usleep(1000);
+		usleep(200);
 }
 
 void	sleeping(t_philo *philo, t_date *date)
