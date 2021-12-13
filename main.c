@@ -6,7 +6,7 @@
 /*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:55:47 by mmonarch          #+#    #+#             */
-/*   Updated: 2021/12/10 19:24:45 by mmonarch         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:18:52 by mmonarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*ft_check_death(void *ddate)
 	{
 		eat = 0;
 		i = -1;
-		usleep(100);
+		usleep(150);
 		while (++i < date->nb)
 		{
 			if (get_time(date->phil[i].eat) > date->time_die)
@@ -67,7 +67,16 @@ void	*ft_check_death(void *ddate)
 
 void	finish(t_date *date)
 {
+	int	i;
+
+	i = 0;
 	pthread_join(date->death, NULL);
+	while (i < date->nb)
+	{
+		pthread_mutex_destroy(&date->fork[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&date->write);
 	free(date->fork);
 	free(date->phil);
 }
@@ -91,10 +100,12 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < date.nb)
 	{
-		pthread_create(&(date.phil[i].ph), NULL, death_diner, &(date.phil[i]));
+		if (pthread_create(&(date.phil[i].ph), NULL, dinner, &(date.phil[i])))
+			return (1);
 		pthread_detach(date.phil[i].ph);
 	}
-	pthread_create(&date.death, NULL, ft_check_death, &date);
+	if (pthread_create(&date.death, NULL, ft_check_death, &date))
+		return (1);
 	finish(&date);
 	return (0);
 }

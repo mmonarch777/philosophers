@@ -46,7 +46,7 @@ typedef struct s_date
 }	t_date;
 
 int		ft_init(char **argv, t_date *date);
-void	*death_diner(void *philo_date);
+void	*dinner(void *philo_date);
 int		get_time(struct timeval time);
 void	time_eat_sleep_think(int time);
 void	sleeping(t_philo *philo, t_date *date);

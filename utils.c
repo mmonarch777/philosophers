@@ -6,7 +6,7 @@
 /*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:45:29 by mmonarch          #+#    #+#             */
-/*   Updated: 2021/12/10 18:45:32 by mmonarch         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:41:07 by mmonarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ void	thinking(t_philo *philo, t_date *date)
 	pthread_mutex_lock(&date->write);
 	printf("%d %d is thinking\n", get_time(date->start), philo->id);
 	pthread_mutex_unlock(&date->write);
+	usleep(1000);
 }

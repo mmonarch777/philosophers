@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = main.c	ft_init.c	death_diner.c	utils.c
+SRC = main.c	ft_init.c	dinner.c	utils.c
 
 OBJ = $(patsubst %.c,%.o,$(SRC))
 
