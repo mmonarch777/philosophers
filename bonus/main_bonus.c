@@ -6,7 +6,7 @@
 /*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 15:06:26 by mmonarch          #+#    #+#             */
-/*   Updated: 2021/12/23 15:08:02 by mmonarch         ###   ########.fr       */
+/*   Updated: 2021/12/23 15:21:16 by mmonarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,15 @@ int	ft_init(char **argv, t_date *date)
 
 void	finish(t_date *date)
 {
-	int	i;
+	int	box;
 	int	j;
 
-	i = 0;
+	box = 0;
 	j = 0;
 	while (j < date->nb)
 	{
-		waitpid(0, &i, 0);
-		if (i)
+		waitpid(0, &box, 0);
+		if (box)
 		{
 			while (j < date->nb)
 			{
@@ -90,7 +90,7 @@ void	finish(t_date *date)
 			}
 		}
 		j++;
-		if (j == date->nb && !i)
+		if (j == date->nb && !box)
 			printf("%d ALL EAT :)\n", get_time(date->start));
 	}
 	sem_close(date->write);
