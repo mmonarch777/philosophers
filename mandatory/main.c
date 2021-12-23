@@ -6,7 +6,7 @@
 /*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 16:55:47 by mmonarch          #+#    #+#             */
-/*   Updated: 2021/12/13 15:18:52 by mmonarch         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:58:40 by mmonarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	ft_check_arguments(int argc, char **argv, int i, int j)
 		j = 0;
 		if (argv[i][j] == '+')
 			j++;
+		if (!argv[i][j])
+			return (1);
 		while (argv[i][j])
 		{
 			if (ft_isdigit(argv[i][j]))
@@ -71,6 +73,7 @@ void	finish(t_date *date)
 
 	i = 0;
 	pthread_join(date->death, NULL);
+	usleep(10000);
 	while (i < date->nb)
 	{
 		pthread_mutex_destroy(&date->fork[i]);

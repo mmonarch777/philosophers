@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 18:45:29 by mmonarch          #+#    #+#             */
-/*   Updated: 2021/12/13 15:41:07 by mmonarch         ###   ########.fr       */
+/*   Created: 2021/12/23 15:06:53 by mmonarch          #+#    #+#             */
+/*   Updated: 2021/12/23 15:07:19 by mmonarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	get_time(struct timeval time)
 {
@@ -36,18 +36,18 @@ void	time_eat_sleep_think(int time)
 		usleep(200);
 }
 
-void	sleeping(t_philo *philo, t_date *date)
+void	sleeping(t_date *date)
 {
-	pthread_mutex_lock(&date->write);
-	printf("%d %d is sleeping\n", get_time(date->start), philo->id);
-	pthread_mutex_unlock(&date->write);
-	time_eat_sleep_think(date->time_sleep);
+	sem_wait(date->write);
+	printf("%d %d is sleeping\n", get_time(date->start), date->id);
+	sem_post(date->write);
+	time_eat_sleep_think(date->t_sleep);
 }
 
-void	thinking(t_philo *philo, t_date *date)
+void	thinking(t_date *date)
 {
-	pthread_mutex_lock(&date->write);
-	printf("%d %d is thinking\n", get_time(date->start), philo->id);
-	pthread_mutex_unlock(&date->write);
-	usleep(1000);
+	sem_wait(date->write);
+	printf("%d %d is thinking\n", get_time(date->start), date->id);
+	sem_post(date->write);
+	usleep(100);
 }

@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libmini.h                                          :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/04 16:56:28 by mmonarch          #+#    #+#             */
-/*   Updated: 2021/12/20 16:53:44 by mmonarch         ###   ########.fr       */
+/*   Created: 2021/12/20 17:34:49 by mmonarch          #+#    #+#             */
+/*   Updated: 2021/12/20 17:34:53 by mmonarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBMINI_H
-# define LIBMINI_H
-# include <unistd.h>
+#include "libmini.h"
 
-void	ft_putendl(char *str);
-void	ft_error(char *str);
-int		ft_isdigit(char c);
-int		ft_atoi(const char *str);
-void	ft_putnbr(int n);
+void	ft_putnbr(int n)
+{
+	unsigned int	nb;
+	unsigned int	na;
+	unsigned int	i;
 
-#endif
+	nb = 1;
+	if (n < 0)
+	{
+		write(1, "-", 1);
+		n = -n;
+	}
+	na = n;
+	while (na >= 10)
+	{
+		nb = nb * 10;
+		na = na / 10;
+	}
+	while (nb != 0)
+	{
+		i = n / nb + 48;
+		write(1, &i, 1);
+		n = n % nb;
+		nb = nb / 10;
+	}
+}

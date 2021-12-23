@@ -13,7 +13,7 @@
 #ifndef PHILO_H
 # define PHILO_H
 # include <unistd.h>
-# include "libmini/libmini.h"
+# include "../libmini/libmini.h"
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdlib.h>
@@ -42,7 +42,6 @@ typedef struct s_date
 	pthread_mutex_t	write;
 	pthread_t		death;
 	struct timeval	start;
-
 }	t_date;
 
 int		ft_init(char **argv, t_date *date);
@@ -51,5 +50,6 @@ int		get_time(struct timeval time);
 void	time_eat_sleep_think(int time);
 void	sleeping(t_philo *philo, t_date *date);
 void	thinking(t_philo *philo, t_date *date);
+void	print(int time, int id, char *str, int len);
 
 #endif
