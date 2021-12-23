@@ -6,7 +6,7 @@
 /*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 15:06:26 by mmonarch          #+#    #+#             */
-/*   Updated: 2021/12/23 15:21:16 by mmonarch         ###   ########.fr       */
+/*   Updated: 2021/12/23 15:37:19 by mmonarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	main(int argc, char **argv)
 
 	if (ft_check_arguments(argc, argv, 0, 0))
 	{
-		ft_error("Error argv. Please give me:\n1.Number philo <= 200\n"
+		ft_error("Error argv. Please give me(type int):\n1.Number philo <= 200\n"
 			"2.Time dia\n3.Time eat\n4.Time sleep\n5.Number times to eat");
 		return (1);
 	}
@@ -125,5 +125,4 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	finish(&date);
-	return (0);
 }

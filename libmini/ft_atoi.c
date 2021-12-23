@@ -6,7 +6,7 @@
 /*   By: mmonarch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 19:27:46 by mmonarch          #+#    #+#             */
-/*   Updated: 2021/12/10 19:30:03 by mmonarch         ###   ########.fr       */
+/*   Updated: 2021/12/23 15:29:04 by mmonarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_atoi(const char *str)
 {
-	int	i;
-	int	nb;
-	int	num;
+	int			i;
+	int			nb;
+	long int	num;
 
 	i = 0;
 	num = 0;
@@ -37,5 +37,5 @@ int	ft_atoi(const char *str)
 	}
 	if (num * nb > 2147483647)
 		return (-1);
-	return (num * nb);
+	return ((int)(num * nb));
 }
